@@ -11,8 +11,20 @@ const EditProduct = () => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    api.get(`/products/${id}?lang=en`).then((res) => {
-      setProduct(res.data);
+    api.get(`/products/${id}`).then((res) => {
+      const p = res.data;
+
+      setProduct({
+        price: p.price,
+        category: p.category,
+        image: p.image,
+
+        name: p.translations.en.name,
+        description: p.translations.en.description,
+
+        jaName: p.translations.ja?.name || "",
+        jaDescription: p.translations.ja?.description || "",
+      });
     });
   }, [id]);
 
